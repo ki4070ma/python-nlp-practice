@@ -97,8 +97,16 @@ def q10():
 
 def q11():
   import subprocess as sp
-  # can be sed, expand
-  sp.call("cat hightemp.txt | tr '\t' ' ' > hightemp_space.txt", shell=True)
+  # can be sed
+  # expand -> expand -t 1 hightemp.txt
+  cmd = "cat hightemp.txt | tr '\t' ' ' > ./q11/hightemp_space.txt"
+  sp.call(cmd, shell=True)
+
+def q12():
+  import subprocess as sp
+  for i in range(1, 3):
+    cmd = "cat hightemp.txt | cut -f{0} > q12/col{0}.txt".format(i)
+    sp.call(cmd, shell=True)
 
 if __name__ == '__main__':
-  q11()
+  q12()
