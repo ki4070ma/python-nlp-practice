@@ -91,9 +91,9 @@ def q9(sentence="I couldn't believe that I could actually understand what I was 
     new_sentence.append(new_word)
   print " ".join(new_sentence)
 
-def q10():
+def q10(input_file="hightemp.txt"):
   import subprocess as sp
-  sp.call("cat hightemp.txt | wc -l", shell=True)
+  return int(sp.check_output("cat {} | wc -l".format(input_file), shell=True).strip())
 
 def q11():
   import subprocess as sp
@@ -108,5 +108,33 @@ def q12():
     cmd = "cat hightemp.txt | cut -f{0} > q12/col{0}.txt".format(i)
     sp.call(cmd, shell=True)
 
+def q13():
+  import subprocess as sp
+  cmd = "paste q12/col1.txt q12/col2.txt > q13/col1_2.txt"
+  sp.call(cmd, shell=True)
+
+def q14(n=10):
+  import subprocess as sp
+  cmd="head -n{} hightemp.txt".format(n)
+  sp.call(cmd.split())
+
+def q15(n=10):
+  import subprocess as sp
+  cmd="tail -n{} hightemp.txt".format(n)
+  sp.call(cmd.split())
+
+def q16(n=3):
+  import subprocess as sp
+  # q10() -> number of lines in input_file
+  input_file = "hightemp.txt"
+  cmd="split -l {} {} {}".format(q10(input_file) // n, input_file, "q16/")
+  sp.call(cmd.split())
+
+def q17():
+  import subprocess as sp
+  cmd="cat hightemp.txt | awk '{print $1}' | sort | uniq | wc -l"
+  print int(sp.check_output(cmd, shell=True).strip())
+
 if __name__ == '__main__':
-  q12()
+  q17()
+
