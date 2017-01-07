@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import sys
 
 def q0():
   print 'stressed'[::-1]
@@ -140,11 +141,14 @@ def execute_cmd(cmd):
   import subprocess as sp
   return sp.check_output(cmd, shell=True).strip()
 
-def q20():
+def load_wiki(filename="jawiki-country.json"):
   wikis = []
-  with open("jawiki-country.json", "r") as fp:
+  with open(filename, "r") as fp:
     for line in fp:
       wikis.append(line.strip())
+  return wikis
+
+def q20(wikis=load_wiki()):
   for wiki in wikis:
     if "イギリス" == eval(wiki)['title']:
       return eval(wiki)['text']
@@ -157,11 +161,27 @@ def q21():
       lines.append(line)
   return lines
 
-# def q22():
-#   lines = q21()
-#   for line in lines:
-#     print line
+def q22():
+  lines = q21()
+  categories = []
+  for line in lines:
+    import re
+    category = re.search(r'\[\[Category:(.*)\]\]', r'{}'.format(line)).group(1)
+    categories.extend([x for x in category.split('|') if x != '*'])
+  print ' '.join(categories)
+
+def q23():
+  wikis = load_wiki()
+  for wiki in wikis:
+    for line in eval(wiki)['text'].split('\n'):
+      import re
+      r = re.search(r'(^=+ .* =+$)', line)
+      if r:
+        a = r.group(1).split()
+        print "{} {}".format(a[0].count("=") - 1, a[1])
+
+def q24():
+  pass
 
 if __name__ == '__main__':
-  q21()
-
+  q24()
