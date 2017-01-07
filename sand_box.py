@@ -141,12 +141,20 @@ def execute_cmd(cmd):
   import subprocess as sp
   return sp.check_output(cmd, shell=True).strip()
 
-def load_wiki(filename="jawiki-country.json"):
+def load_wiki(filename="files/jawiki-country.json"):
   wikis = []
   with open(filename, "r") as fp:
     for line in fp:
       wikis.append(line.strip())
   return wikis
+
+def load_wiki_text():
+  wikis = load_wiki()
+  lines = []
+  for wiki in wikis:
+    for line in eval(wiki)['text'].split('\n'):
+      lines.append(line)
+  return lines
 
 def q20(wikis=load_wiki()):
   for wiki in wikis:
@@ -171,17 +179,68 @@ def q22():
   print ' '.join(categories)
 
 def q23():
-  wikis = load_wiki()
-  for wiki in wikis:
-    for line in eval(wiki)['text'].split('\n'):
-      import re
-      r = re.search(r'(^=+ .* =+$)', line)
-      if r:
-        a = r.group(1).split()
-        print "{} {}".format(a[0].count("=") - 1, a[1])
+  for line in load_wiki_text():
+    import re
+    r = re.search(r'(^=+ .* =+$)', line)
+    if r:
+      a = r.group(1).split()
+      print "{} {}".format(a[0].count("=") - 1, a[1])
 
-def q24():
+def q24(): # incomplete
+  for line in load_wiki_text():
+    import re
+    # r = re.search(r'<ref>(.*)</ref>', line)
+    r = re.search(r'<ref>.*(http://.*.html).*</ref>', line)
+    if r:
+      print r.group(1)
+
+
+def q25(): # incomplete
+  wikis = load_wiki()
+  lines = []
+  for wiki in wikis:
+    import re
+    #r = re.search(r'({{基礎情報.*\n}}\n)', wiki)
+    if u'基礎情報' in wiki:
+      print '****'
+      print wiki
+      #print r.group(1)
+
+def q26():
+  pass
+
+def q27():
+  pass
+
+def q28():
+  pass
+
+def q29():
+  pass
+
+def load_mecab_txt(filename="files/neko.txt.mecab"):
+  with open(filename, 'r') as f:
+    return f.readlines()
+
+def q30():
+  ret_list = []
+  for line in load_mecab_txt():
+    a = line.strip().split()
+    if len(a) > 1 and '動詞' == a[1].split(',')[0]:
+      ret_list.append(a[1])
+  return ret_list
+
+def q31():
+  for line in q30():
+    print line.split(",")[-3]
+
+def q32():
+  for line in load_mecab_txt():
+    if 'サ変接続' in line and '——' not in line:
+      print line.split()[0]
+
+def q33():
   pass
 
 if __name__ == '__main__':
-  q24()
+  q32()
