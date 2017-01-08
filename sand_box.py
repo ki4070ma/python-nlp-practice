@@ -275,5 +275,47 @@ def q35():
         print '\n'
       l = []
 
+def q36():
+  d = {}
+  for i, line in enumerate(load_mecab_txt()):
+    a = line.strip().split()
+    if len(a) < 2:
+      continue
+    if a[0] in d.keys():
+      d[a[0]] += 1
+    else:
+      d[a[0]] = 1
+  from operator import itemgetter
+  return sorted(d.items(), key=itemgetter(1), reverse=True)
+
+def read_q36_result():
+  file="q36/result.txt"
+  d = {}
+  with open(file, 'r') as fp:
+    for line in fp.readlines():
+      word, count = line.split()
+      d[word] = int(count)
+  return d
+
+def q37():
+  for i, item in enumerate(q36()):
+    if i == 10:
+      break
+    print '{} {}'.format(item[0], item[1])
+
+# TODO Need to brush up pyplot
+def q38():
+  import matplotlib.pyplot as plt
+  d = read_q36_result()
+  tmp_d = {}
+  for i in set(d.values()):
+    tmp_d[i] = d.values().count(i)
+  from operator import itemgetter
+  new_d = sorted(tmp_d.items(), key=itemgetter(1), reverse=True)
+  plt.figure(figsize=(10, 60))
+  plt.barh(range(len(new_d)), [x[1] for x in new_d], align='center')
+  plt.yticks(range(len(new_d)), [x[0] for x in new_d])
+  plt.savefig('q38/img.png')
+
 if __name__ == '__main__':
-  q35()
+  q38()
