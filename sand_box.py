@@ -222,7 +222,7 @@ def load_mecab_txt(filename="files/neko.txt.mecab"):
   with open(filename, 'r') as f:
     return f.readlines()
 
-def q30():
+def q31():
   ret_list = []
   for line in load_mecab_txt():
     a = line.strip().split()
@@ -230,17 +230,50 @@ def q30():
       ret_list.append(a[1])
   return ret_list
 
-def q31():
-  for line in q30():
+def q32():
+  for line in q31():
     print line.split(",")[-3]
 
-def q32():
+def q33():
   for line in load_mecab_txt():
     if 'サ変接続' in line and '——' not in line:
       print line.split()[0]
 
-def q33():
-  pass
+def q34():
+  l = []
+  for i, line in enumerate(load_mecab_txt()):
+    a = line.strip().split()
+    if len(a) < 2:
+      continue
+    l.insert(0, {'word': a[0], 'grammar': a[1].split(',')[0]})
+    if len(l) < 3:
+      continue
+    if '名詞' ==  l[0]['grammar'] and 'の' == l[1]['word'] and '名詞' == l[2]['grammar']:
+      print '{}{}{}'.format(l[0]['word'], l[1]['word'], l[2]['word'])
+      l = []
+      continue
+    l.pop()
+
+def q35():
+  l = []
+  for i, line in enumerate(load_mecab_txt()):
+    a = line.strip().split()
+    if len(a) < 2:
+      continue
+    if len(l) % 2 == 0:
+      if '名詞' == a[1].split(',')[0]:
+        l.insert(0, {'word': a[0], 'grammar': a[1].split(',')[0]})
+        continue
+    elif len(l) % 2 == 1 and 'の' == a[0]:
+      l.insert(0, {'word': a[0], 'grammar': a[1].split(',')[0]})
+    else:
+      if len(l) > 1:
+        for item in l:
+          #print item['word'],
+          import sys
+          sys.stdout.write(item['word'])
+        print '\n'
+      l = []
 
 if __name__ == '__main__':
-  q32()
+  q35()
