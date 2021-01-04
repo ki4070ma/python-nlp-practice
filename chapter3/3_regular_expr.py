@@ -42,7 +42,7 @@ def q22():
 
         category = re.search(r"\[\[Category:(.*)\]\]", r"{}".format(line)).group(1)
         categories.extend([x for x in category.split("|") if x != "*"])
-    print " ".join(categories)
+    print(" ".join(categories))
 
 
 def q23():
@@ -52,7 +52,7 @@ def q23():
         r = re.search(r"(^=+ .* =+$)", line)
         if r:
             a = r.group(1).split()
-            print "{} {}".format(a[0].count("=") - 1, a[1])
+            print("{} {}".format(a[0].count("=") - 1, a[1]))
 
 
 def q24():  # incomplete
@@ -62,7 +62,7 @@ def q24():  # incomplete
         # r = re.search(r'<ref>(.*)</ref>', line)
         r = re.search(r"<ref>.*(http://.*.html).*</ref>", line)
         if r:
-            print r.group(1)
+            print(r.group(1))
 
 
 def q25():  # incomplete
@@ -72,9 +72,9 @@ def q25():  # incomplete
         import re
 
         # r = re.search(r'({{基礎情報.*\n}}\n)', wiki)
-        if u"基礎情報" in wiki:
-            print "****"
-            print wiki
+        if "基礎情報" in wiki:
+            print("****")
+            print(wiki)
             # print r.group(1)
 
 

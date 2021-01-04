@@ -10,9 +10,9 @@ class Morph(object):
         self.__pos1 = pos1
 
     def output(self):
-        print "surface:{}, base:{}, pos:{}, pos1:{}".format(
+        print("surface:{}, base:{}, pos:{}, pos1:{}".format(
             self.__surface, self.__base, self.__pos, self.__pos1
-        )
+        ))
 
 
 # 表層形\t品詞,品詞細分類1,品詞細分類2,品詞細分類3,活用型,活用形,原形,読み,発音
